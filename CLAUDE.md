@@ -55,11 +55,19 @@ Posts are managed through Sanity CMS with the following expected schema:
   - `tailwind.config.ts` - Custom theme configuration with CSS variables
   - `components.json` - shadcn/ui CLI configuration
   - `src/lib/utils.ts` - Contains `cn()` utility function for className merging
-- **Installed Components**: Button, Card, Input, Avatar, Badge, Separator
+- **Installed Components**: Button, Card, Input, Avatar, Badge, Separator, Dialog, Form, Label, Navigation Menu, Toast, Sheet, Accordion
 - **Component Location**: `src/components/ui/`
 - **Import Pattern**: `import { Button } from "@/components/ui/button"`
-- **Theming**: CSS variables in `globals.css` support light/dark mode
+- **Theming**: CSS variables in `globals.css` support light/dark mode with `next-themes` support
+- **Icons**: Lucide React icons available (v0.540.0) - `import { IconName } from "lucide-react"`
 - **Add New Components**: Use `npx shadcn@latest add [component-name]`
+
+### Enhanced Features
+
+- **Dark Mode**: `next-themes` installed for theme management
+- **Form Handling**: `react-hook-form` with `zod` validation and `@hookform/resolvers`
+- **Toast Notifications**: Built-in toast system with `use-toast` hook
+- **Comprehensive UI Kit**: Production-ready components for modals, navigation, forms, and interactions
 
 ## AI Agent Instructions
 
