@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { ThemeToggle } from "@/components/theme"
 
 export function Header() {
   return (
@@ -13,8 +14,8 @@ export function Header() {
           </h1>
         </div>
 
-        {/* CTA Button */}
-        <div className="flex items-center">
+        {/* Right side navigation - CTA Button and Theme Toggle */}
+        <div className="flex items-center gap-4">
           <Button 
             size="lg"
             className="font-semibold"
@@ -28,6 +29,7 @@ export function Header() {
               Book A Discovery Call
             </a>
           </Button>
+          <ThemeToggle />
         </div>
       </div>
     </header>
