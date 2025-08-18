@@ -45,3 +45,6 @@ Posts are managed through Sanity CMS with the following expected schema:
 - `publishedAt: datetime`
 - `body: PortableText array`
 - `image: SanityImageSource` (optional)
+
+### shadcn/ui Components
+- Modern component library built on Radix UI primitives
