@@ -20,12 +20,14 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
   - Dataset: `production` 
   - API version: `2024-01-01`
 
-- **Content Structure**: Blog-style application with posts
-  - Main page (`src/app/page.tsx`) - Lists posts from Sanity
+- **Content Structure**: Website with Sanity CMS integration
+  - **Current homepage** (`src/app/page.tsx`) - Demo example from Sanity setup (will be replaced with rocket5.ca homepage)
   - Dynamic post pages (`src/app/[slug]/page.tsx`) - Individual post display with PortableText rendering
+  - **Sanity Studio**: Located at `../rocket5-ca-studio-nextjs` (separate repository)
+  - Content editing workflows will be implemented throughout the site
   - Image optimization using `@sanity/image-url`
 
-- **Styling**: Uses Tailwind CSS v4 with Geist fonts (sans and mono variants)
+- **Styling**: Uses Tailwind CSS v3.4.0 with Geist fonts (sans and mono variants) and shadcn/ui components
 
 - **Data Fetching**: 
   - Uses Sanity queries with ISR (revalidate: 30 seconds)
@@ -47,4 +49,47 @@ Posts are managed through Sanity CMS with the following expected schema:
 - `image: SanityImageSource` (optional)
 
 ### shadcn/ui Components
-- Modern component library built on Radix UI primitives
+
+- **Setup**: Complete shadcn/ui configuration with Tailwind CSS v3.4.0 compatibility
+- **Configuration Files**:
+  - `tailwind.config.ts` - Custom theme configuration with CSS variables
+  - `components.json` - shadcn/ui CLI configuration
+  - `src/lib/utils.ts` - Contains `cn()` utility function for className merging
+- **Installed Components**: Button, Card, Input, Avatar, Badge, Separator
+- **Component Location**: `src/components/ui/`
+- **Import Pattern**: `import { Button } from "@/components/ui/button"`
+- **Theming**: CSS variables in `globals.css` support light/dark mode
+- **Add New Components**: Use `npx shadcn@latest add [component-name]`
+
+## AI Agent Instructions
+
+### MCP Server Usage
+
+- **shadcn MCP Server**: Use `mcp__shadcn__*` tools for:
+  - Getting component source code with `mcp__shadcn__get_component`
+  - **Getting exact usage examples** with `mcp__shadcn__get_component_demo` - Use this whenever working with shadcn/ui components to see proper implementation patterns
+  - Listing available components and blocks
+  - Understanding component structure and usage patterns
+
+### Specialized Agents
+
+- **nextjs-fullstack-developer**: Use for:
+  - Next.js App Router implementation
+  - Server Components and Server Actions
+  - Database integration and API routes
+  - Performance optimization and Core Web Vitals
+  - Full-stack features like authentication
+
+- **shadcn-ui-developer**: Use for:
+  - Building UI components with shadcn/ui
+  - Customizing Radix UI primitives
+  - Implementing design systems with Tailwind CSS
+  - Creating accessible React components
+  - Component composition and theming
+
+- **ui-designer**: Use for:
+  - User interface design and layout
+  - User experience improvements
+  - Design system development
+  - Accessibility compliance
+  - Modern UI/UX patterns and best practices
