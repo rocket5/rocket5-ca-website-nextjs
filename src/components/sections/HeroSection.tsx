@@ -49,25 +49,25 @@ export function HeroSection({ className }: HeroSectionProps) {
             </div>
             
             {/* Social Proof Section */}
-            <div className="flex flex-col items-center gap-6">
+            <div className="mx-auto flex max-w-lg flex-col items-center gap-4 sm:flex-row sm:gap-6">
               {/* Client Avatars */}
-              <div className="flex -space-x-2">
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-16 md:w-16">
+              <div className="flex -space-x-2 shrink-0">
+                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
                   <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
                   <AvatarFallback className="bg-primary text-primary-foreground">JD</AvatarFallback>
                 </Avatar>
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-16 md:w-16">
+                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
                   <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b1e9?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
                   <AvatarFallback className="bg-primary text-primary-foreground">SM</AvatarFallback>
                 </Avatar>
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-16 md:w-16">
+                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
                   <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
                   <AvatarFallback className="bg-primary text-primary-foreground">MR</AvatarFallback>
                 </Avatar>
               </div>
               
               {/* Social Proof Text */}
-              <p className="text-sm text-muted-foreground md:text-base">
+              <p className="text-center text-sm text-muted-foreground sm:text-left md:text-base">
                 Two decades of interactive media expertise, now focused on your business growth
               </p>
             </div>
