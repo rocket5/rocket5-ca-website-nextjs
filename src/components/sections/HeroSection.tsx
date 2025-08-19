@@ -36,7 +36,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
   // Handle missing data gracefully
   if (!data) {
     return (
-      <section className={`py-16 md:py-24 lg:py-32 ${className || ""}`}>
+      <section className={`py-12 md:py-16 lg:py-20 ${className || ""}`}>
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-muted-foreground">
@@ -51,7 +51,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
   return (
     <>
       {/* Main Hero Section */}
-      <section className={`relative py-16 md:py-24 lg:py-32 ${className || ""}`}>
+      <section className={`relative pt-16 pb-8 md:pt-20 md:pb-12 lg:pt-24 lg:pb-16 ${className || ""}`}>
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-4xl text-center">
             {/* Main Headline */}
@@ -113,7 +113,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
       </section>
 
       {/* Benefits Section with Gray Background */}
-      <section className="bg-muted py-8 md:py-12">
+      <section className="bg-muted py-8 md:py-12 lg:py-16">
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-6xl">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">

@@ -4,7 +4,7 @@ import { draftMode } from "next/headers";
 
 import { getClient } from "@/app/sanity/client";
 import { Header } from "@/components/layout";
-import { HeroSection, ServicesSection } from "@/components/sections";
+import { HeroSection, ServicesSection, AboutSection } from "@/components/sections";
 import { DraftModeIndicator } from "@/components/DraftModeIndicator";
 
 const POSTS_QUERY = `*[
@@ -52,6 +52,63 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
       featured
     }
   },
+  aboutSection {
+    rightSideContent {
+      title,
+      subtitle,
+      mainContent
+    },
+    leftSideContent {
+      profileImage {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        },
+        crop,
+        hotspot
+      },
+      profileImageAlt,
+      profileName,
+      profileTitle
+    },
+    centerContent {
+      centeredParagraph
+    },
+    clientLogosSection {
+      sectionTitle,
+      clientLogos[] {
+        clientName,
+        logo {
+          asset->{
+            _id,
+            url,
+            metadata {
+              dimensions {
+                width,
+                height
+              }
+            }
+          },
+          crop,
+          hotspot
+        },
+        logoAlt,
+        websiteUrl,
+        displayOrder,
+        featured
+      },
+      gridLayout {
+        columns,
+        rows
+      }
+    }
+  },
   seo {
     metaTitle,
     metaDescription,
@@ -91,6 +148,7 @@ export default async function IndexPage() {
         <main>
         <HeroSection data={homepage?.heroSection} />
         <ServicesSection data={homepage?.servicesSection} />
+        <AboutSection data={homepage?.aboutSection} />
         
         {/* Demo section showing existing posts - this would be replaced with actual content sections */}
         <section className="py-16 bg-muted/50">

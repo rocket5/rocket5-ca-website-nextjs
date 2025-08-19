@@ -26,7 +26,7 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
   // Handle missing data gracefully
   if (!data || !data.services || data.services.length === 0) {
     return (
-      <section className={`py-16 md:py-24 lg:py-32 ${className || ""}`}>
+      <section className={`py-12 md:py-16 lg:py-20 ${className || ""}`}>
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-3xl text-center">
             <p className="text-muted-foreground">
@@ -43,7 +43,7 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
   const featuredService = data.services.find(service => service.featured)
 
   return (
-    <section className={`py-16 md:py-24 lg:py-32 ${className || ""}`}>
+    <section className={`pt-8 pb-4 md:pt-12 md:pb-6 lg:pt-16 lg:pb-8 ${className || ""}`}>
       <div className="container px-4 md:px-6">
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}

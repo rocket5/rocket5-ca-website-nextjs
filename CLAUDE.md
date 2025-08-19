@@ -63,6 +63,18 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
   - `sectionTitle: string`
   - `sectionSubtitle: text`
   - `services: array of objects` with `title`, `description`, `iconName`, `featured` (drag-to-reorder)
+- `aboutSection: object` with fields:
+  - `title: string`
+  - `subtitle: text`
+  - `mainContent: text`
+  - `profileImage: SanityImageSource`
+  - `profileImageAlt: string`
+  - `profileName: string`
+  - `profileTitle: string`
+  - `centeredParagraph: text`
+  - `sectionTitle: string`
+  - `clientLogos: array of objects` with `clientName`, `logoImage`, `logoAlt`, `websiteUrl`, `featured` (drag-to-reorder)
+  - `gridLayout: object` with `columns`, `rows`
 - `seo: object` with `metaTitle`, `metaDescription`, `ogImage`
 - Query: `*[_type == "homepage"][0]{ ... }` with optimized asset projections
 
