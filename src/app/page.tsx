@@ -25,6 +25,17 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
       name,
       fallbackInitials
     }
+  },
+  servicesSection {
+    sectionTitle,
+    sectionSubtitle,
+    services[] | order(displayOrder asc) {
+      title,
+      description,
+      iconName,
+      featured,
+      displayOrder
+    }
   }
 }`;
 
@@ -44,7 +55,7 @@ export default async function IndexPage() {
         <Header />
         <main>
         <HeroSection data={homepage?.heroSection} />
-        <ServicesSection />
+        <ServicesSection data={homepage?.servicesSection} />
         
         {/* Demo section showing existing posts - this would be replaced with actual content sections */}
         <section className="py-16 bg-muted/50">

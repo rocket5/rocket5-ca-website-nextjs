@@ -59,7 +59,11 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
   - `benefits: array of strings`
   - `socialProofText: text`
   - `clientAvatars: array of objects` with `image`, `name`, `fallbackInitials`
-- Query: `*[_type == "homepage"][0]{ heroSection { ... } }`
+- `servicesSection: object` with fields:
+  - `sectionTitle: string`
+  - `sectionSubtitle: text`
+  - `services: array of objects` with `title`, `description`, `iconName`, `featured`, `displayOrder`
+- Query: `*[_type == "homepage"][0]{ heroSection { ... }, servicesSection { ... } }`
 
 ### shadcn/ui Components
 
@@ -133,3 +137,11 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 **Environment Variables**: Required for Sanity integration:
 - `SANITY_PREVIEW_SECRET`: Custom secret for preview mode access
 - `SANITY_API_READ_TOKEN`: Sanity API token with Viewer permissions
+
+### Development Philosophy
+
+**No Fallback Data Strategy**: Components should expect and rely on Sanity CMS data being present:
+- **Single Source of Truth**: All content comes from Sanity, no hardcoded fallbacks in components
+- **Fail Fast**: Better to show empty state or error than stale hardcoded content
+- **Clean Code**: Components are props-driven, no data duplication or maintenance burden
+- **Error Handling**: Use error boundaries and empty states for missing data scenarios
