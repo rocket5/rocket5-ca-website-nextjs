@@ -3,7 +3,7 @@ import { type SanityDocument } from "next-sanity";
 
 import { client } from "@/app/sanity/client";
 import { Header } from "@/components/layout";
-import { HeroSection } from "@/components/sections";
+import { HeroSection, ServicesSection } from "@/components/sections";
 
 const POSTS_QUERY = `*[
   _type == "post"
@@ -20,6 +20,7 @@ export default async function IndexPage() {
       <Header />
       <main>
         <HeroSection />
+        <ServicesSection />
         
         {/* Demo section showing existing posts - this would be replaced with actual content sections */}
         <section className="py-16 bg-muted/50">
