@@ -93,30 +93,28 @@ export function ServicesSection({ className }: ServicesSectionProps) {
               {regularServices.map((service) => {
                 const IconComponent = service.icon
                 return (
-                  <Card 
+                  <div 
                     key={service.id}
-                    className="group relative overflow-hidden border-border bg-card hover:bg-accent/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                    className="group text-center p-6 md:p-8"
                   >
-                    <CardContent className="p-6 md:p-8">
-                      {/* Icon */}
-                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
-                        <IconComponent 
-                          className="h-6 w-6 text-primary" 
-                          aria-hidden="true"
-                        />
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="space-y-2">
-                        <h3 className="text-lg font-semibold text-card-foreground md:text-xl">
-                          {service.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed md:text-base">
-                          {service.description}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                    {/* Icon */}
+                    <div className="mb-4 mx-auto flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-colors duration-300">
+                      <IconComponent 
+                        className="h-6 w-6 text-primary" 
+                        aria-hidden="true"
+                      />
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="space-y-2">
+                      <h3 className="text-base font-semibold text-foreground md:text-lg whitespace-nowrap">
+                        {service.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed md:text-base">
+                        {service.description}
+                      </p>
+                    </div>
+                  </div>
                 )
               })}
             </div>
