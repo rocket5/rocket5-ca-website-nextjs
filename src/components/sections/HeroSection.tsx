@@ -3,17 +3,66 @@
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Check } from "lucide-react"
+import { urlFor } from "@/app/sanity/client"
+
+interface ClientAvatar {
+  image: {
+    asset: {
+      _ref: string;
+      _type: "reference";
+    };
+    _type: "image";
+  } | null
+  name?: string
+  fallbackInitials: string
+}
+
+interface HeroData {
+  headline: string
+  subheadline: string
+  ctaText: string
+  ctaLink: string
+  benefits: string[]
+  socialProofText: string
+  clientAvatars: ClientAvatar[]
+}
 
 interface HeroSectionProps {
+  data?: HeroData
   className?: string
 }
 
-export function HeroSection({ className }: HeroSectionProps) {
-  const benefits = [
-    "No WordPress headaches",
-    "No security nightmares", 
-    "Results that grow your business"
-  ]
+export function HeroSection({ data, className }: HeroSectionProps) {
+  // Fallback data in case Sanity data isn't available
+  const heroData = data || {
+    headline: "Stop Losing Customers to Slow, Confusing Websites",
+    subheadline: "We build modern, lightning-fast websites that turn visitors into customers.",
+    ctaText: "Book A Discovery Call",
+    ctaLink: "#contact",
+    benefits: [
+      "No WordPress headaches",
+      "No security nightmares", 
+      "Results that grow your business"
+    ],
+    socialProofText: "Two decades of interactive media expertise, now focused on your business growth",
+    clientAvatars: [
+      {
+        image: null,
+        name: "John Doe",
+        fallbackInitials: "JD"
+      },
+      {
+        image: null,
+        name: "Sarah Miller",
+        fallbackInitials: "SM"
+      },
+      {
+        image: null,
+        name: "Mike Roberts",
+        fallbackInitials: "MR"
+      }
+    ]
+  }
 
   return (
     <>
@@ -23,12 +72,12 @@ export function HeroSection({ className }: HeroSectionProps) {
           <div className="mx-auto max-w-4xl text-center">
             {/* Main Headline */}
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              Stop Losing Customers to Slow, Confusing Websites
+              {heroData.headline}
             </h1>
             
             {/* Subheadline */}
             <p className="mb-8 text-xl text-muted-foreground md:text-2xl lg:mb-12">
-              We build modern, lightning-fast websites that turn visitors into customers.
+              {heroData.subheadline}
             </p>
             
             {/* CTA Button */}
@@ -39,11 +88,11 @@ export function HeroSection({ className }: HeroSectionProps) {
                 asChild
               >
                 <a 
-                  href="#contact"
+                  href={heroData.ctaLink}
                   className="no-underline"
-                  aria-label="Book a discovery call to get started with Rocket 5 Studios"
+                  aria-label={`${heroData.ctaText} - Get started with Rocket 5 Studios`}
                 >
-                  Book A Discovery Call
+                  {heroData.ctaText}
                 </a>
               </Button>
             </div>
@@ -52,23 +101,24 @@ export function HeroSection({ className }: HeroSectionProps) {
             <div className="mx-auto flex max-w-lg flex-col items-center gap-4 sm:flex-row sm:gap-6">
               {/* Client Avatars */}
               <div className="flex -space-x-2 shrink-0">
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
-                  <AvatarImage src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
-                  <AvatarFallback className="bg-primary text-primary-foreground">JD</AvatarFallback>
-                </Avatar>
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
-                  <AvatarImage src="https://images.unsplash.com/photo-1494790108755-2616b612b1e9?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
-                  <AvatarFallback className="bg-primary text-primary-foreground">SM</AvatarFallback>
-                </Avatar>
-                <Avatar className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
-                  <AvatarImage src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face" alt="Client testimonial" />
-                  <AvatarFallback className="bg-primary text-primary-foreground">MR</AvatarFallback>
-                </Avatar>
+                {heroData.clientAvatars.map((avatar, index) => (
+                  <Avatar key={index} className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
+                    {avatar.image && (
+                      <AvatarImage 
+                        src={urlFor(avatar.image).width(150).height(150).fit('crop').url()} 
+                        alt={avatar.name ? `${avatar.name} testimonial` : "Client testimonial"} 
+                      />
+                    )}
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {avatar.fallbackInitials}
+                    </AvatarFallback>
+                  </Avatar>
+                ))}
               </div>
               
               {/* Social Proof Text */}
               <p className="text-center text-sm text-muted-foreground sm:text-left md:text-base">
-                Two decades of interactive media expertise, now focused on your business growth
+                {heroData.socialProofText}
               </p>
             </div>
           </div>
@@ -80,7 +130,7 @@ export function HeroSection({ className }: HeroSectionProps) {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-6xl">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {benefits.map((benefit, index) => (
+              {heroData.benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center justify-center gap-3 md:justify-start">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
                     <Check className="h-3 w-3 text-primary" aria-hidden="true" />

@@ -1,25 +1,48 @@
 import Link from "next/link";
 import { type SanityDocument } from "next-sanity";
+import { draftMode } from "next/headers";
 
-import { client } from "@/app/sanity/client";
+import { getClient } from "@/app/sanity/client";
 import { Header } from "@/components/layout";
 import { HeroSection, ServicesSection } from "@/components/sections";
+import { DraftModeIndicator } from "@/components/DraftModeIndicator";
 
 const POSTS_QUERY = `*[
   _type == "post"
   && defined(slug.current)
 ]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
 
+const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
+  heroSection {
+    headline,
+    subheadline,
+    ctaText,
+    ctaLink,
+    benefits,
+    socialProofText,
+    clientAvatars[] {
+      image,
+      name,
+      fallbackInitials
+    }
+  }
+}`;
+
 const options = { next: { revalidate: 30 } };
 
 export default async function IndexPage() {
-  const posts = await client.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
+  const { isEnabled: isDraftMode } = await draftMode();
+  const sanityClient = getClient(isDraftMode);
+  
+  const posts = await sanityClient.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
+  const homepage = await sanityClient.fetch<SanityDocument>(HOMEPAGE_QUERY, {}, options);
 
   return (
     <>
+      {isDraftMode && <DraftModeIndicator />}
       <Header />
       <main>
-        <HeroSection />
+        <HeroSection data={homepage?.heroSection} />
         <ServicesSection />
         
         {/* Demo section showing existing posts - this would be replaced with actual content sections */}
