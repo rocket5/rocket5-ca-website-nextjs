@@ -40,13 +40,26 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 
 ### Content Management
 
-Posts are managed through Sanity CMS with the following expected schema:
+**Posts** are managed through Sanity CMS with the following schema:
 - `_type: "post"`
 - `title: string`
 - `slug: {current: string}`
 - `publishedAt: datetime`
 - `body: PortableText array`
 - `image: SanityImageSource` (optional)
+
+**Homepage** content is managed through Sanity CMS with the following schema:
+- `_type: "homepage"`
+- `title: string`
+- `heroSection: object` with fields:
+  - `headline: string`
+  - `subheadline: text`
+  - `ctaText: string`
+  - `ctaLink: string`
+  - `benefits: array of strings`
+  - `socialProofText: text`
+  - `clientAvatars: array of objects` with `image`, `name`, `fallbackInitials`
+- Query: `*[_type == "homepage"][0]{ heroSection { ... } }`
 
 ### shadcn/ui Components
 
@@ -68,6 +81,10 @@ Posts are managed through Sanity CMS with the following expected schema:
 - **Form Handling**: `react-hook-form` with `zod` validation and `@hookform/resolvers`
 - **Toast Notifications**: Built-in toast system with `use-toast` hook
 - **Comprehensive UI Kit**: Production-ready components for modals, navigation, forms, and interactions
+- **Sanity Preview Mode**: Draft content preview functionality with Next.js Draft Mode
+  - Preview API routes: `/api/draft` and `/api/disable-draft`
+  - Environment variables: `SANITY_PREVIEW_SECRET` and `SANITY_API_READ_TOKEN`
+  - Visual indicator component for draft mode with proper Next.js Link usage
 
 ## AI Agent Instructions
 
@@ -101,3 +118,18 @@ Posts are managed through Sanity CMS with the following expected schema:
   - Design system development
   - Accessibility compliance
   - Modern UI/UX patterns and best practices
+
+## Build and Deployment
+
+### Vercel/Next.js Build Requirements
+
+**Critical ESLint Rules**: The following must be followed to prevent build failures:
+- **Apostrophes**: Escape apostrophes in JSX text using `&apos;` (e.g., `You&apos;re` not `You're`)
+- **Navigation**: Use `<Link>` from `next/link` instead of `<a>` tags for internal navigation
+- **React Rules**: Follow all `react/no-unescaped-entities` and Next.js routing rules
+
+**Image Optimization**: Consider using `next/image` instead of `<img>` tags for better Core Web Vitals
+
+**Environment Variables**: Required for Sanity integration:
+- `SANITY_PREVIEW_SECRET`: Custom secret for preview mode access
+- `SANITY_API_READ_TOKEN`: Sanity API token with Viewer permissions
