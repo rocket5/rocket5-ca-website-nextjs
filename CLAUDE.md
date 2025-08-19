@@ -102,26 +102,41 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 
 ### Specialized Agents
 
-- **nextjs-fullstack-developer**: Use for:
-  - Next.js App Router implementation
+**IMPORTANT**: Always check for and use available custom subagents from `.claude/agents/` folder before performing complex tasks. These agents are project-specific and should be preferred over built-in agents.
+
+**Available Custom Agents** (located in `.claude/agents/`):
+- **sanity-studio-expert**: **USE FIRST** for all Sanity CMS tasks including:
+  - Schema design and content modeling
+  - GROQ queries and optimization
+  - Studio customization and configuration
+  - Frontend integration with Sanity
+  - Content architecture and editorial workflows
+
+- **nextjs-fullstack-developer**: **USE FIRST** for all Next.js tasks including:
+  - App Router implementation and routing
   - Server Components and Server Actions
   - Database integration and API routes
   - Performance optimization and Core Web Vitals
   - Full-stack features like authentication
 
-- **shadcn-ui-developer**: Use for:
-  - Building UI components with shadcn/ui
+- **shadcn-ui-developer**: **USE FIRST** for all UI component work including:
+  - Building components with shadcn/ui
   - Customizing Radix UI primitives
   - Implementing design systems with Tailwind CSS
   - Creating accessible React components
   - Component composition and theming
 
-- **ui-designer**: Use for:
+- **ui-designer**: **USE FIRST** for all design-related tasks including:
   - User interface design and layout
   - User experience improvements
   - Design system development
   - Accessibility compliance
   - Modern UI/UX patterns and best practices
+
+**Agent Selection Priority**:
+1. **ALWAYS** use custom agents from `.claude/agents/` when available for the task type
+2. Use built-in MCP agents only when no custom agent matches the task
+3. Perform tasks directly only for simple, single-step operations
 
 ## Build and Deployment
 

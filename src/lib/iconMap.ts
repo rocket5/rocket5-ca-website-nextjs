@@ -10,7 +10,13 @@ import {
   Globe, 
   Smartphone, 
   Lock, 
-  Rocket 
+  Rocket,
+  Code,
+  Palette,
+  Search,
+  Monitor,
+  Database,
+  Cloud
 } from "lucide-react"
 
 export const iconMap = {
@@ -26,10 +32,27 @@ export const iconMap = {
   Smartphone,
   Lock,
   Rocket,
+  Code,
+  Palette,
+  Search,
+  Monitor,
+  Database,
+  Cloud,
 } as const
 
 export type IconName = keyof typeof iconMap
 
-export function getIcon(iconName: string) {
-  return iconMap[iconName as IconName] || Award // Default fallback icon
+export function getIcon(iconName: string): React.ComponentType<React.SVGProps<SVGSVGElement>> {
+  if (!iconName || typeof iconName !== 'string') {
+    console.warn(`Invalid icon name provided: ${iconName}. Using fallback icon.`)
+    return Award
+  }
+  
+  const icon = iconMap[iconName as IconName]
+  if (!icon) {
+    console.warn(`Icon "${iconName}" not found in iconMap. Available icons: ${Object.keys(iconMap).join(', ')}. Using fallback icon.`)
+    return Award
+  }
+  
+  return icon
 }

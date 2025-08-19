@@ -33,35 +33,19 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ data, className }: HeroSectionProps) {
-  // Fallback data in case Sanity data isn't available
-  const heroData = data || {
-    headline: "Stop Losing Customers to Slow, Confusing Websites",
-    subheadline: "We build modern, lightning-fast websites that turn visitors into customers.",
-    ctaText: "Book A Discovery Call",
-    ctaLink: "#contact",
-    benefits: [
-      "No WordPress headaches",
-      "No security nightmares", 
-      "Results that grow your business"
-    ],
-    socialProofText: "Two decades of interactive media expertise, now focused on your business growth",
-    clientAvatars: [
-      {
-        image: null,
-        name: "John Doe",
-        fallbackInitials: "JD"
-      },
-      {
-        image: null,
-        name: "Sarah Miller",
-        fallbackInitials: "SM"
-      },
-      {
-        image: null,
-        name: "Mike Roberts",
-        fallbackInitials: "MR"
-      }
-    ]
+  // Handle missing data gracefully
+  if (!data) {
+    return (
+      <section className={`py-16 md:py-24 lg:py-32 ${className || ""}`}>
+        <div className="container px-4 md:px-6">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-muted-foreground">
+              Hero section not configured. Please add hero content in Sanity Studio.
+            </p>
+          </div>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -72,27 +56,27 @@ export function HeroSection({ data, className }: HeroSectionProps) {
           <div className="mx-auto max-w-4xl text-center">
             {/* Main Headline */}
             <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-              {heroData.headline}
+              {data.headline}
             </h1>
             
             {/* Subheadline */}
             <p className="mb-8 text-xl text-muted-foreground md:text-2xl lg:mb-12">
-              {heroData.subheadline}
+              {data.subheadline}
             </p>
             
             {/* CTA Button */}
             <div className="mb-12 lg:mb-16">
               <Button 
                 size="lg" 
-                className="h-12 px-8 text-lg font-semibold md:h-14 md:px-12 md:text-xl"
+                className="h-12 px-8 text-lg font-semibold transition-all duration-300 hover:scale-105 hover:shadow-lg md:h-14 md:px-12 md:text-xl"
                 asChild
               >
                 <a 
-                  href={heroData.ctaLink}
+                  href={data.ctaLink}
                   className="no-underline"
-                  aria-label={`${heroData.ctaText} - Get started with Rocket 5 Studios`}
+                  aria-label={`${data.ctaText} - Get started with Rocket 5 Studios`}
                 >
-                  {heroData.ctaText}
+                  {data.ctaText}
                 </a>
               </Button>
             </div>
@@ -100,16 +84,19 @@ export function HeroSection({ data, className }: HeroSectionProps) {
             {/* Social Proof Section */}
             <div className="mx-auto flex max-w-lg flex-col items-center gap-4 sm:flex-row sm:gap-6">
               {/* Client Avatars */}
-              <div className="flex -space-x-2 shrink-0">
-                {heroData.clientAvatars.map((avatar, index) => (
-                  <Avatar key={index} className="h-12 w-12 border-2 border-background ring-2 ring-primary/20 md:h-14 md:w-14">
+              <div className="flex -space-x-2 shrink-0 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:ring-2">
+                {data.clientAvatars.map((avatar, index) => (
+                  <Avatar 
+                    key={index} 
+                    className="h-12 w-12 transition-transform duration-200 hover:scale-110 hover:z-10 md:h-14 md:w-14"
+                  >
                     {avatar.image && (
                       <AvatarImage 
                         src={urlFor(avatar.image).width(150).height(150).fit('crop').url()} 
                         alt={avatar.name ? `${avatar.name} testimonial` : "Client testimonial"} 
                       />
                     )}
-                    <AvatarFallback className="bg-primary text-primary-foreground">
+                    <AvatarFallback className="bg-primary text-primary-foreground text-xs md:text-sm font-semibold">
                       {avatar.fallbackInitials}
                     </AvatarFallback>
                   </Avatar>
@@ -118,7 +105,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
               
               {/* Social Proof Text */}
               <p className="text-center text-sm text-muted-foreground sm:text-left md:text-base">
-                {heroData.socialProofText}
+                {data.socialProofText}
               </p>
             </div>
           </div>
@@ -130,7 +117,7 @@ export function HeroSection({ data, className }: HeroSectionProps) {
         <div className="container px-4 md:px-6">
           <div className="mx-auto max-w-6xl">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-3 md:gap-8">
-              {heroData.benefits.map((benefit, index) => (
+              {data.benefits.map((benefit, index) => (
                 <div key={index} className="flex items-center justify-center gap-3 md:justify-start">
                   <div className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10">
                     <Check className="h-3 w-3 text-primary" aria-hidden="true" />
