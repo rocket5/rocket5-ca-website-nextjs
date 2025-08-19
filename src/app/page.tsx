@@ -40,8 +40,9 @@ export default async function IndexPage() {
   return (
     <>
       {isDraftMode && <DraftModeIndicator />}
-      <Header />
-      <main>
+      <div className={isDraftMode ? "pt-14" : ""}>
+        <Header />
+        <main>
         <HeroSection data={homepage?.heroSection} />
         <ServicesSection />
         
@@ -61,7 +62,8 @@ export default async function IndexPage() {
             </ul>
           </div>
         </section>
-      </main>
+        </main>
+      </div>
     </>
   );
 }
