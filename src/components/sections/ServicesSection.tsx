@@ -3,14 +3,12 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { getIcon } from "@/lib/iconMap"
-import { cn } from "@/lib/utils"
 
 interface Service {
   title: string
   description: string
   iconName: string
   featured: boolean
-  displayOrder: number
 }
 
 interface ServicesData {
@@ -40,11 +38,9 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
     )
   }
 
-  // Sort services by display order
-  const sortedServices = [...data.services].sort((a, b) => a.displayOrder - b.displayOrder)
-  
-  const regularServices = sortedServices.filter(service => !service.featured)
-  const featuredService = sortedServices.find(service => service.featured)
+  // Services are already in correct order from CMS (array order)
+  const regularServices = data.services.filter(service => !service.featured)
+  const featuredService = data.services.find(service => service.featured)
 
   return (
     <section className={`py-16 md:py-24 lg:py-32 ${className || ""}`}>

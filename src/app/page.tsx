@@ -13,6 +13,9 @@ const POSTS_QUERY = `*[
 ]|order(publishedAt desc)[0...12]{_id, title, slug, publishedAt}`;
 
 const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
+  _id,
+  _updatedAt,
+  title,
   heroSection {
     headline,
     subheadline,
@@ -21,7 +24,20 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
     benefits,
     socialProofText,
     clientAvatars[] {
-      image,
+      image {
+        asset->{
+          _id,
+          url,
+          metadata {
+            dimensions {
+              width,
+              height
+            }
+          }
+        },
+        crop,
+        hotspot
+      },
       name,
       fallbackInitials
     }
@@ -29,24 +45,43 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
   servicesSection {
     sectionTitle,
     sectionSubtitle,
-    services[] | order(displayOrder asc) {
+    services[] {
       title,
       description,
       iconName,
-      featured,
-      displayOrder
+      featured
+    }
+  },
+  seo {
+    metaTitle,
+    metaDescription,
+    ogImage {
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      crop,
+      hotspot
     }
   }
 }`;
 
-const options = { next: { revalidate: 30 } };
+// Optimized caching strategy
+const fetchOptions = { next: { revalidate: 60 } }; // Homepage content changes less frequently
+const postsOptions = { next: { revalidate: 300 } }; // Posts can be cached longer
 
 export default async function IndexPage() {
   const { isEnabled: isDraftMode } = await draftMode();
   const sanityClient = getClient(isDraftMode);
   
-  const posts = await sanityClient.fetch<SanityDocument[]>(POSTS_QUERY, {}, options);
-  const homepage = await sanityClient.fetch<SanityDocument>(HOMEPAGE_QUERY, {}, options);
+  const posts = await sanityClient.fetch<SanityDocument[]>(POSTS_QUERY, {}, postsOptions);
+  const homepage = await sanityClient.fetch<SanityDocument>(HOMEPAGE_QUERY, {}, fetchOptions);
 
   return (
     <>

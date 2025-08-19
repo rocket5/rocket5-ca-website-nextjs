@@ -49,7 +49,7 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 - `image: SanityImageSource` (optional)
 
 **Homepage** content is managed through Sanity CMS with the following schema:
-- `_type: "homepage"`
+- `_type: "homepage"` (Singleton document)
 - `title: string`
 - `heroSection: object` with fields:
   - `headline: string`
@@ -62,8 +62,9 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 - `servicesSection: object` with fields:
   - `sectionTitle: string`
   - `sectionSubtitle: text`
-  - `services: array of objects` with `title`, `description`, `iconName`, `featured`, `displayOrder`
-- Query: `*[_type == "homepage"][0]{ heroSection { ... }, servicesSection { ... } }`
+  - `services: array of objects` with `title`, `description`, `iconName`, `featured` (drag-to-reorder)
+- `seo: object` with `metaTitle`, `metaDescription`, `ogImage`
+- Query: `*[_type == "homepage"][0]{ ... }` with optimized asset projections
 
 ### shadcn/ui Components
 
@@ -77,6 +78,8 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
 - **Import Pattern**: `import { Button } from "@/components/ui/button"`
 - **Theming**: CSS variables in `globals.css` support light/dark mode with `next-themes` support
 - **Icons**: Lucide React icons available (v0.540.0) - `import { IconName } from "lucide-react"`
+  - **Enhanced Icon Library**: 40+ service-relevant icons categorized by purpose (Core Business, Design & Creative, Development & Tech, Marketing & Communication, Business & Analytics, E-commerce & Commerce, General Purpose)
+  - **Icon Mapping**: Centralized icon management in `src/lib/iconMap.ts` with string-to-component conversion
 - **Add New Components**: Use `npx shadcn@latest add [component-name]`
 
 ### Enhanced Features
