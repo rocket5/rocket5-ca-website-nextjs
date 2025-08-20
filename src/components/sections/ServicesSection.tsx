@@ -111,8 +111,8 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
             {/* Featured Service - Left Side (40% width - 2/5) */}
             {featuredService && (
               <div className="lg:col-span-2">
-                <Card className="h-full group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                  <CardContent className="p-6 h-full flex flex-col justify-center">
+                <Card className="h-full group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-0">
+                  <div className="p-4">
                     <div className="space-y-3">
                       <h3 className="text-3xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                         {featuredService.title}
@@ -121,7 +121,7 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
                         {featuredService.description}
                       </p>
                     </div>
-                  </CardContent>
+                  </div>
                 </Card>
               </div>
             )}
@@ -132,9 +132,9 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
                 {regularServices.slice(0, 2).map((service, index) => (
                   <Card 
                     key={`${service.title}-${index}`}
-                    className="group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
+                    className="group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1 py-0"
                   >
-                    <CardContent className="p-6">
+                    <div className="p-4">
                       <div className="space-y-3">
                         <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                           {service.title}
@@ -143,7 +143,7 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
                           {service.description}
                         </p>
                       </div>
-                    </CardContent>
+                    </div>
                   </Card>
                 ))}
               </div>

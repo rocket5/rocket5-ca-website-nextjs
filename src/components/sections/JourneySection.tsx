@@ -84,11 +84,11 @@ export function JourneySection({ data, className }: JourneySectionProps) {
             {data.steps.map((step, index) => (
               <Card 
                 key={`${step.stepNumber}-${index}`}
-                className="group relative overflow-hidden bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/20"
+                className="group relative overflow-hidden bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/20 py-0"
               >
-                <CardContent className="p-6 md:p-8">
+                <div className="p-4">
                   {/* Step Number */}
-                  <div className="mb-6">
+                  <div className="mb-3">
                     <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 group-hover:bg-primary/20 transition-all duration-300">
                       <span className="text-lg font-bold text-primary">
                         {step.stepNumber}
@@ -105,7 +105,7 @@ export function JourneySection({ data, className }: JourneySectionProps) {
                       {step.description}
                     </p>
                   </div>
-                </CardContent>
+                </div>
 
                 {/* Hover Effect Gradient */}
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

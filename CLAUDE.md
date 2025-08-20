@@ -99,6 +99,11 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
   - **Enhanced Icon Library**: 40+ service-relevant icons categorized by purpose (Core Business, Design & Creative, Development & Tech, Marketing & Communication, Business & Analytics, E-commerce & Commerce, General Purpose)
   - **Icon Mapping**: Centralized icon management in `src/lib/iconMap.ts` with string-to-component conversion
 - **Add New Components**: Use `npx shadcn@latest add [component-name]`
+- **CRITICAL Card Padding Issue**: shadcn/ui Card component has built-in `py-6` (24px vertical padding) by default
+  - **Problem**: Combining Card's default padding with custom padding creates uneven spacing
+  - **Solution**: Always add `py-0` to Card className to override default vertical padding
+  - **Pattern**: `<Card className="... py-0"><div className="p-4">content</div></Card>`
+  - **Result**: Uniform padding on all sides instead of extra vertical padding
 
 ### Enhanced Features
 
