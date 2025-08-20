@@ -106,17 +106,36 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
             )}
           </div>
 
-          {/* Services Grid - Top Row (2 regular services) */}
-          {regularServices.length > 0 && (
-            <div className="mb-8 md:mb-12">
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+          {/* Services Grid - Wireframe Layout: Featured left, Regular stacked right */}
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:gap-8">
+            {/* Featured Service - Left Side (40% width - 2/5) */}
+            {featuredService && (
+              <div className="lg:col-span-2">
+                <Card className="h-full group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                  <CardContent className="p-6 h-full flex flex-col justify-center">
+                    <div className="space-y-3">
+                      <h3 className="text-3xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
+                        {featuredService.title}
+                      </h3>
+                      <p className="text-xl text-muted-foreground leading-relaxed">
+                        {featuredService.description}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Regular Services - Right Side (60% width - 3/5, stacked vertically) */}
+            {regularServices.length > 0 && (
+              <div className={`space-y-6 ${!featuredService ? 'lg:col-span-5' : 'lg:col-span-3'}`}>
                 {regularServices.slice(0, 2).map((service, index) => (
                   <Card 
                     key={`${service.title}-${index}`}
-                    className="group relative overflow-hidden bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/20"
+                    className="group relative overflow-hidden border transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
                   >
-                    <CardContent className="p-6 md:p-8">
-                      <div className="space-y-4">
+                    <CardContent className="p-6">
+                      <div className="space-y-3">
                         <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                           {service.title}
                         </h3>
@@ -125,39 +144,11 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
                         </p>
                       </div>
                     </CardContent>
-                    {/* Hover Effect Gradient */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </Card>
                 ))}
               </div>
-            </div>
-          )}
-
-          {/* Featured Service - Full Width */}
-          {featuredService && (
-            <div className="mx-auto max-w-4xl">
-              <Card className="group relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/15 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <CardHeader className="pb-4">
-                  <div className="flex items-center justify-center mb-2">
-                    <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30">
-                      Featured
-                    </Badge>
-                  </div>
-                </CardHeader>
-                <CardContent className="relative text-center">
-                  <div className="space-y-4">
-                    <CardTitle className="text-2xl md:text-3xl lg:text-4xl group-hover:text-primary transition-colors duration-300">
-                      {featuredService.title}
-                    </CardTitle>
-                    <CardDescription className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-                      {featuredService.description}
-                    </CardDescription>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
     </section>
