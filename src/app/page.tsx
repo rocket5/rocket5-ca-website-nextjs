@@ -20,27 +20,7 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
     headline,
     subheadline,
     ctaText,
-    ctaLink,
-    benefits,
-    socialProofText,
-    clientAvatars[] {
-      image {
-        asset->{
-          _id,
-          url,
-          metadata {
-            dimensions {
-              width,
-              height
-            }
-          }
-        },
-        crop,
-        hotspot
-      },
-      name,
-      fallbackInitials
-    }
+    ctaLink
   },
   servicesSection {
     sectionTitle,
