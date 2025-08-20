@@ -34,12 +34,15 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
     }
   },
   servicesSection {
-    sectionTitle,
-    sectionSubtitle,
+    badge,
+    title,
+    highlightedWord,
+    ctaText,
+    ctaLink,
+    subtitle,
     services[] {
       title,
       description,
-      iconName,
       featured
     }
   },

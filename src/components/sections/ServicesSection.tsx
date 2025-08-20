@@ -2,18 +2,21 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { getIcon } from "@/lib/iconMap"
+import { Button } from "@/components/ui/button"
 
 interface Service {
   title: string
   description: string
-  iconName: string
   featured: boolean
 }
 
 interface ServicesData {
-  sectionTitle: string
-  sectionSubtitle: string
+  badge?: string
+  title?: string
+  highlightedWord?: string
+  ctaText?: string
+  ctaLink?: string
+  subtitle?: string
   services: Service[]
 }
 
@@ -38,93 +41,118 @@ export function ServicesSection({ data, className }: ServicesSectionProps) {
     )
   }
 
-  // Services are already in correct order from CMS (array order)
-  const regularServices = data.services.filter(service => !service.featured)
-  const featuredService = data.services.find(service => service.featured)
+  // Limit to 3 services maximum and separate regular vs featured
+  const limitedServices = data.services.slice(0, 3)
+  const regularServices = limitedServices.filter(service => !service.featured)
+  const featuredService = limitedServices.find(service => service.featured)
+
+  // Split title to highlight specific word
+  const titleParts = data.title ? data.title.split(data.highlightedWord || '') : ['']
+  const hasHighlight = titleParts.length === 2 && data.highlightedWord
 
   return (
-    <section className={`pt-8 pb-4 md:pt-12 md:pb-6 lg:pt-16 lg:pb-8 ${className || ""}`}>
+    <section className={`py-12 md:py-16 lg:py-20 ${className || ""}`}>
       <div className="container px-4 md:px-6">
         <div className="mx-auto max-w-6xl">
           {/* Section Header */}
           <div className="mx-auto max-w-3xl text-center mb-12 lg:mb-16">
-            <h2 className="mb-4 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
-              {data.sectionTitle}
-            </h2>
-            <p className="text-lg text-muted-foreground md:text-xl">
-              {data.sectionSubtitle}
-            </p>
+            {/* Badge */}
+            {data.badge && (
+              <div className="mb-6">
+                <Badge 
+                  variant="secondary" 
+                  className="inline-flex items-center px-3 py-1 text-sm font-medium bg-primary/10 text-primary hover:bg-primary/20 rounded-full"
+                >
+                  {data.badge}
+                </Badge>
+              </div>
+            )}
+
+            {/* Main Title with Highlight */}
+            {data.title && (
+              <h2 className="mb-6 text-3xl font-bold tracking-tight text-foreground md:text-4xl lg:text-5xl">
+                {hasHighlight ? (
+                  <>
+                    {titleParts[0]}
+                    <span className="text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                      {data.highlightedWord}
+                    </span>
+                    {titleParts[1]}
+                  </>
+                ) : (
+                  data.title
+                )}
+              </h2>
+            )}
+
+            {/* CTA Button */}
+            {data.ctaText && data.ctaLink && (
+              <div className="mb-8">
+                <Button 
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-base font-medium transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                  onClick={() => window.open(data.ctaLink, '_self')}
+                >
+                  {data.ctaText}
+                </Button>
+              </div>
+            )}
+
+            {/* Subtitle */}
+            {data.subtitle && (
+              <p className="text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto leading-relaxed">
+                {data.subtitle}
+              </p>
+            )}
           </div>
 
-          {/* Services Grid */}
-          <div className="mb-8 md:mb-12">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
-              {regularServices.map((service, index) => {
-                const IconComponent = getIcon(service.iconName)
-                return (
+          {/* Services Grid - Top Row (2 regular services) */}
+          {regularServices.length > 0 && (
+            <div className="mb-8 md:mb-12">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-8">
+                {regularServices.slice(0, 2).map((service, index) => (
                   <Card 
                     key={`${service.title}-${index}`}
-                    className="group relative overflow-hidden border-0 bg-transparent shadow-none transition-all duration-300 hover:bg-card hover:shadow-md hover:-translate-y-1"
+                    className="group relative overflow-hidden bg-card hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-border/50 hover:border-primary/20"
                   >
-                    <CardContent className="flex flex-col items-center text-center p-6 md:p-8">
-                      {/* Icon */}
-                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 group-hover:bg-primary/20 transition-all duration-300 group-hover:scale-110">
-                        <IconComponent 
-                          className="h-6 w-6 text-primary transition-transform duration-300" 
-                          aria-hidden="true"
-                        />
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-foreground md:text-lg group-hover:text-primary transition-colors duration-300">
+                    <CardContent className="p-6 md:p-8">
+                      <div className="space-y-4">
+                        <h3 className="text-xl font-semibold text-foreground group-hover:text-primary transition-colors duration-300">
                           {service.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed md:text-base">
+                        <p className="text-muted-foreground leading-relaxed">
                           {service.description}
                         </p>
                       </div>
                     </CardContent>
+                    {/* Hover Effect Gradient */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </Card>
-                )
-              })}
+                ))}
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Featured Service */}
+          {/* Featured Service - Full Width */}
           {featuredService && (
             <div className="mx-auto max-w-4xl">
               <Card className="group relative overflow-hidden bg-gradient-to-br from-primary/5 to-primary/10 hover:from-primary/10 hover:to-primary/15 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <CardHeader className="pb-0">
-                  <div className="flex items-center gap-3 mb-2">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-center mb-2">
                     <Badge variant="secondary" className="bg-primary/20 text-primary hover:bg-primary/30">
                       Featured
                     </Badge>
                   </div>
                 </CardHeader>
-                <CardContent className="relative">
-                  <div className="flex flex-col items-center text-center lg:flex-row lg:text-left lg:gap-8">
-                    {/* Icon */}
-                    <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-xl bg-primary/20 group-hover:bg-primary/30 transition-all duration-300 group-hover:scale-110 lg:mb-0 lg:shrink-0">
-                      {(() => {
-                        const FeaturedIconComponent = getIcon(featuredService.iconName)
-                        return <FeaturedIconComponent 
-                          className="h-8 w-8 text-primary transition-transform duration-300" 
-                          aria-hidden="true"
-                        />
-                      })()}
-                    </div>
-                    
-                    {/* Content */}
-                    <div className="space-y-3 lg:space-y-4">
-                      <CardTitle className="text-xl md:text-2xl lg:text-3xl group-hover:text-primary transition-colors duration-300">
-                        {featuredService.title}
-                      </CardTitle>
-                      <CardDescription className="text-base md:text-lg leading-relaxed">
-                        {featuredService.description}
-                      </CardDescription>
-                    </div>
+                <CardContent className="relative text-center">
+                  <div className="space-y-4">
+                    <CardTitle className="text-2xl md:text-3xl lg:text-4xl group-hover:text-primary transition-colors duration-300">
+                      {featuredService.title}
+                    </CardTitle>
+                    <CardDescription className="text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                      {featuredService.description}
+                    </CardDescription>
                   </div>
                 </CardContent>
               </Card>
