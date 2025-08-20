@@ -63,6 +63,12 @@ This is a Next.js 15 application using the App Router with TypeScript and Tailwi
   - `sectionTitle: string`
   - `sectionSubtitle: text`
   - `services: array of objects` with `title`, `description`, `iconName`, `featured` (drag-to-reorder)
+- `journeySection: object` with fields:
+  - `badge: string`
+  - `title: string`
+  - `highlightedWord: string`
+  - `subtitle: text`
+  - `steps: array of objects` with `stepNumber`, `title`, `description` (drag-to-reorder)
 - `aboutSection: object` with fields:
   - `title: string`
   - `subtitle: text`

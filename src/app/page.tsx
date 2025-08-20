@@ -4,7 +4,7 @@ import { draftMode } from "next/headers";
 
 import { getClient } from "@/app/sanity/client";
 import { Header } from "@/components/layout";
-import { HeroSection, ServicesSection, AboutSection } from "@/components/sections";
+import { HeroSection, JourneySection, ServicesSection, AboutSection } from "@/components/sections";
 import { DraftModeIndicator } from "@/components/DraftModeIndicator";
 
 const POSTS_QUERY = `*[
@@ -21,6 +21,17 @@ const HOMEPAGE_QUERY = `*[_type == "homepage"][0]{
     subheadline,
     ctaText,
     ctaLink
+  },
+  journeySection {
+    badge,
+    title,
+    highlightedWord,
+    subtitle,
+    steps[] {
+      stepNumber,
+      title,
+      description
+    }
   },
   servicesSection {
     sectionTitle,
@@ -127,6 +138,7 @@ export default async function IndexPage() {
         <Header />
         <main>
         <HeroSection data={homepage?.heroSection} />
+        <JourneySection data={homepage?.journeySection} />
         <ServicesSection data={homepage?.servicesSection} />
         <AboutSection data={homepage?.aboutSection} />
         
